@@ -1,0 +1,47 @@
+pipeline {
+  agent any 
+  environment{
+    DOCKER_TAG = getDockerTag()
+  }
+  stages{
+      stage('Build Docker Image'){
+	      steps{
+		     sh "docker build . -t 966145/myimg:${DOCKER_TAG}"
+		  }
+	  
+	  }
+	stage('DockerHub Push'){
+	  steps{
+	  withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerhubpwd')]) {
+           sh "docker login -u 966145 -p ${dockerhubpwd}"
+		   sh "docker push 966145/myimg:${DOCKER_TAG}"
+           }
+	    }
+	  }
+	  stage('Deploy to k8s'){
+	    steps{
+		  sh "chmod +x changetag.sh"
+		  sh "./changetag.sh ${DOCKER_TAG}"
+		  sshagent(['kops-machine']){
+		    sh "scp -o StrictHostKeyChecking=no pod.yaml ec2-user@13.127.150.169:/home/ec2-user/"
+			script{
+			    try{
+				  sh "ssh ec2-user@13.127.150.169 kubectl apply -f ."				 
+				}
+				catch(error){
+				  sh "ssh ec2-user@13.127.150.169 kubectl create -f ."
+				}
+			}
+			
+		  }
+		}
+	  
+	  }
+    }
+
+}
+
+def getDockerTag(){
+     def tag = sh script: 'git rev-parse HEAD', returnStdout: true
+	 return tag
+}
