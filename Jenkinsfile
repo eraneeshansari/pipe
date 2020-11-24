@@ -11,7 +11,7 @@ pipeline{
        stage('Docker Image Pust to Docker Hub'){
           steps{
              withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhubpass')]) {
-               sh "docker login -u 966145 -p ${dockerhubpass}
+               sh "docker login -u 966145 -p ${dockerhubpass}"
                sh "docker push 966145/myimagnov:latest"
            }    
           }
