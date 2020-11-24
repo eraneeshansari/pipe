@@ -1,11 +1,13 @@
 pipeline{
    agent any
    stages{
-        stage('Docker Image Biuld')
+       stage('Docker Image Build'){
             steps{
-               sh "pwd && whoami"
-                }
-         }
+                sh "pwd && whoami"
+                 }
+                                  }
+
+         } 
 
 
 
