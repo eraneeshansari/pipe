@@ -3,7 +3,7 @@ pipeline{
    stages{
        stage('Docker Image Build'){
             steps{
-                sh "pwd && whoami"
+                sh "docker build . -t 966145/myimagnov:latest"
                  }
                                   }
 
