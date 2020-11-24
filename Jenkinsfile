@@ -15,7 +15,15 @@ pipeline{
                sh "docker push 966145/myimagnov:latest"
            }    
           }
-
+       }
+// Deploy mypod.yaml in k8s cluster
+       stage('Deploy pod in Kops Cluster'){
+          steps{
+             sshagent(['ec2']) {
+             sh "scp -o StrictHostKeyChecking=no mypod.yaml  ec2-user@13.235.83.64:/home/ec2-user/"
+             sh "ssh ec2-user@13.235.83.64 kubectl create -f mypod.yaml
+             }
+          }
        }
 
          } 
