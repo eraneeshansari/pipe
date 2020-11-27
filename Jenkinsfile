@@ -32,7 +32,7 @@ environment {
 		    catch(error){
 		        sh "ssh ec2-user@3.7.71.231 kubectl create -f ."
 		               }
-
+                      }
              }
           }
        }
