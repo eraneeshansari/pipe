@@ -1,7 +1,7 @@
 pipeline{
    agent any
 environment {
-  DOCKER_TAG = "getVersion"
+  DOCKER_TAG = getVersion()
 }
 
    stages{
