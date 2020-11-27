@@ -24,8 +24,8 @@ environment {
        stage('Deploy pod in Kops Cluster'){
           steps{
              sshagent(['ec2']) {
-             sh "scp -o StrictHostKeyChecking=no mypod.yaml  ec2-user@13.235.83.64:/home/ec2-user/"
-             sh "ssh ec2-user@13.235.83.64 kubectl create -f mypod.yaml"
+             sh "scp -o StrictHostKeyChecking=no mypod.yaml  ec2-user@3.7.71.231:/home/ec2-user/"
+             sh "ssh ec2-user@3.7.71.231 kubectl create -f mypod.yaml"
              }
           }
        }
