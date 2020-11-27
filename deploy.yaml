@@ -22,7 +22,7 @@
     - name: Start container 
         docker_container:
            name: testcontainer
-           image: "966145/myimagnov:${DOCKER_TAGi}"
+           image: "966145/myimagnov:${DOCKER_TAG}"
            state: started
            published_ports:
              - 0.0.0.0:8080:80

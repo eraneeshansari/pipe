@@ -51,8 +51,8 @@ environment {
 #                        sh "ssh ec2-user@3.7.71.231 kubectl create -f ."
 #                               }
 #                      } */
-   sh "ansiblePlaybook credentialsId: 'ec2', disableHostKeyChecking: true, extras: "-e DOCKER_TAG=${DOCKER_TAG}", inventory: 'inventory', playbook: 'deploy.yaml'"
-             }
+    ansiblePlaybook credentialsId: 'ec2', disableHostKeyChecking: true, extras: "-e DOCKER_TAG=${DOCKER_TAG}", inventory: 'inventory', playbook: 'deploy.yaml'
+           }
           }
        } 
 //end of Create container code
