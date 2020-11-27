@@ -25,7 +25,14 @@ environment {
           steps{
              sshagent(['ec2']) {
              sh "scp -o StrictHostKeyChecking=no mypod.yaml  ec2-user@3.7.71.231:/home/ec2-user/"
-             sh "ssh ec2-user@3.7.71.231 kubectl create -f mypod.yaml"
+                 script{
+		    try{
+		       sh "ssh ec2-user@3.7.71.231 kubectl apply -f ."				 
+		       }
+		    catch(error){
+		        sh "ssh ec2-user@3.7.71.231 kubectl create -f ."
+		               }
+
              }
           }
        }
