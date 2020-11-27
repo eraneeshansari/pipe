@@ -1,10 +1,14 @@
 pipeline{
    agent any
+environment {
+  DOCKER_TAG = "getVersion"
+}
+
    stages{
 // Docker Image Build Code
        stage('Docker Image Build'){
             steps{
-                sh "docker build . -t 966145/myimagnov:latest"
+                sh "docker build . -t 966145/myimagnov:${DOCKER_TAG}"
             }
        }
 // Docker Push Code 
@@ -12,7 +16,7 @@ pipeline{
           steps{
              withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhubpass')]) {
                sh "docker login -u 966145 -p ${dockerhubpass}"
-               sh "docker push 966145/myimagnov:latest"
+               sh "docker push 966145/myimagnov:${DOCKER_TAG}"
            }    
           }
        }
@@ -31,4 +35,10 @@ pipeline{
 
 
 
+}
+
+
+def getVersion() {
+     def commitid = sh returnStdout: true, script: 'git rev-parse --short HEAD' 
+     return commitid
 }
