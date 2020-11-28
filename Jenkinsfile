@@ -24,13 +24,13 @@ environment {
        stage('Deploy pod in Kops Cluster'){
           steps{
              sshagent(['ec2']) {
-             sh "scp -o StrictHostKeyChecking=no mypod.yaml  ec2-user@52.66.240.52:/home/ec2-user/"
+             sh "scp -o StrictHostKeyChecking=no mypod.yaml  ec2-user@172.31.1.242:/home/ec2-user/"
                  script{
 		    try{
-		       sh "ssh ec2-user@52.66.240.52 kubectl apply -f ."				 
+		       sh "ssh ec2-user@172.31.1.242 kubectl apply -f ."				 
 		       }
 		    catch(error){
-		        sh "ssh ec2-user@52.66.240.52 kubectl create -f ."
+		        sh "ssh ec2-user@172.31.1.242 kubectl create -f ."
 		               }
                       }
              }
